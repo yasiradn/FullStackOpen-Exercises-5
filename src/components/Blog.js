@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import blogService from '../services/blogs'
+
 const Blog = ({ blog }) => {
   const blogStyle = {
     paddingTop: 10,
@@ -8,6 +10,20 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
   const [viewBlog, setViewBlog] = useState(false)
+  const [countLike, setCountLike] = useState(0)
+  const handleUpdate = async() => {
+    //no auth in backend as now
+    console.log(`update like`)
+    setCountLike(countLike+1)
+    const updateObj = {
+      likes: countLike,
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      id:blog.id
+    }
+    await blogService.updateAll(updateObj)
+  }
   const blogDetailView = () => {
     return(
       <div>
@@ -15,7 +31,7 @@ const Blog = ({ blog }) => {
         <br/> 
         {blog.url}
         <br/>
-        likes {blog.likes} <button>likes</button>
+        likes {blog.likes} <button onClick={handleUpdate}>likes</button>
         <br/>
         {blog.author}
       </div>

@@ -18,4 +18,9 @@ const postAll = async newObject => {
   return res.data
 }
 
-export default { getAll,postAll,setToken }
+const updateAll = async newObject => {
+  const res = axios.put(`${baseUrl}/${newObject.id}`, newObject)
+  return res.data
+}
+
+export default { getAll,postAll,setToken, updateAll }
