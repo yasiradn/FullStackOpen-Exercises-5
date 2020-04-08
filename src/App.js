@@ -12,7 +12,14 @@ const App = () => {
   const [author, setAuthour] = useState('')
   const [url, setUrl] = useState('')
 
-
+  useEffect(()=>{
+    const getLoggedUser = window.localStorage.getItem('BlogAppUser')
+    if(getLoggedUser){
+      const user = JSON.parse(getLoggedUser)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  },[])
 
   const handleLogin = async(e) => {
     e.preventDefault()
@@ -22,6 +29,7 @@ const App = () => {
         username, password
       })
       blogService.setToken(user.token)
+      window.localStorage.setItem('BlogAppUser', JSON.stringify(user))
       setUser(user)
       setUsername('')
       setPassword('')
@@ -36,6 +44,10 @@ const App = () => {
     try {
       const newObj = {title,author,url}
       await blogService.postAll(newObj)
+      setTitle('')
+      setAuthour('')
+      setUrl('')
+      setBlogs([...blogs,newObj])
     } catch (error) {
       console.log('error: Adding a blog',error)
     }
@@ -58,10 +70,15 @@ const App = () => {
       )
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedNoteappUser')
+    window.localStorage.clear()
+  }
+
   const showBlogs = () => {
     return(
       <div>
-        <p>{user.name} logged in</p>
+        <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p> 
         {addNewBlog()}
         <h2>blogs</h2>
         {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
@@ -95,7 +112,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [])
+  }, [blogs])
 
   return (
     <div>
