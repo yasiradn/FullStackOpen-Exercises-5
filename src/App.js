@@ -8,6 +8,10 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthour] = useState('')
+  const [url, setUrl] = useState('')
+
 
 
   const handleLogin = async(e) => {
@@ -17,12 +21,23 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
-      console.log('user data', user)
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (err) {
       console.log(err)
+    }
+  }
+
+  const handleBlogCreate = async(e) => {
+    e.preventDefault()
+    console.log(`Passing Data ${title} ${author} ${url}`)
+    try {
+      const newObj = {title,author,url}
+      await blogService.postAll(newObj)
+    } catch (error) {
+      console.log('error: Adding a blog',error)
     }
   }
 
@@ -47,8 +62,31 @@ const App = () => {
     return(
       <div>
         <p>{user.name} logged in</p>
+        {addNewBlog()}
         <h2>blogs</h2>
         {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+      </div>
+    )
+  }
+
+  const addNewBlog = () => {
+    return(
+      <div>
+        <h2>create new</h2>
+        <form onSubmit={handleBlogCreate}>
+        <div>
+          <div>
+          title <input type="text" value={title} name="Title" onChange={({ target }) => setTitle(target.value)}/>
+          </div>
+          <div>
+          author <input type="text" value={author} name="Title" onChange={({ target }) => setAuthour(target.value)}/>
+          </div>
+          <div>
+          url <input type="text" value={url} name="Title" onChange={({ target }) => setUrl(target.value)}/>
+          </div>
+        </div>
+        <button type="submit">create</button>
+        </form>
       </div>
     )
   }
