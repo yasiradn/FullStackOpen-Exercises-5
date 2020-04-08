@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './index.css'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,6 +13,8 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthour] = useState('')
   const [url, setUrl] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [showMsg, setMsg] = useState('')
 
   useEffect(()=>{
     const getLoggedUser = window.localStorage.getItem('BlogAppUser')
@@ -34,6 +38,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
+      setTimeout(()=>{setErrMsg(`Wrong username or password`)},2000)
       console.log(err)
     }
   }
@@ -44,10 +49,11 @@ const App = () => {
     try {
       const newObj = {title,author,url}
       await blogService.postAll(newObj)
+      setBlogs([...blogs,newObj])
+      setTimeout(()=>{setMsg(`A new blog ${title} by ${author} added`)},2000)
       setTitle('')
       setAuthour('')
       setUrl('')
-      setBlogs([...blogs,newObj])
     } catch (error) {
       console.log('error: Adding a blog',error)
     }
@@ -56,6 +62,7 @@ const App = () => {
   const loginForm = () => {
       return(
         <div>
+          <ErrorMessage message={errMsg}/>
           <h2>log in to application</h2>
           <form onSubmit={handleLogin}>
         <div>
@@ -78,6 +85,7 @@ const App = () => {
   const showBlogs = () => {
     return(
       <div>
+        <ShowMessage message={showMsg}/>
         <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p> 
         {addNewBlog()}
         <h2>blogs</h2>
@@ -113,6 +121,13 @@ const App = () => {
       setBlogs( blogs )
     )  
   }, [blogs])
+
+  const ShowMessage = ({message}) => {
+    return (message === '') ? '': <div className="showMessage">{message}</div>
+  }
+  const ErrorMessage = ({message}) => {
+  return (message === '') ? '': <div className="errorMessage">{message}</div>
+  }
 
   return (
     <div>

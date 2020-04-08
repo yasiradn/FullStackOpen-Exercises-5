@@ -1,0 +1,15 @@
+  .showMessage{
+    color: green;
+    border-style: solid;
+    font-size: medium;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.errorMessage{
+    color: red;
+    border-style: solid;
+    font-size: medium;
+    font-weight: bold;
+    padding: 20px;
+}
