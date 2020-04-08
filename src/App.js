@@ -15,6 +15,8 @@ const App = () => {
   const [url, setUrl] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [showMsg, setMsg] = useState('')
+  const [shouldShow, setShouldShow] = useState(true)
+  
 
   useEffect(()=>{
     const getLoggedUser = window.localStorage.getItem('BlogAppUser')
@@ -38,7 +40,8 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
-      setTimeout(()=>{setErrMsg(`Wrong username or password`)},2000)
+      setErrMsg(`Wrong username or password`)
+      setTimeout(()=>{setErrMsg(``)},2000)
       console.log(err)
     }
   }
@@ -50,7 +53,8 @@ const App = () => {
       const newObj = {title,author,url}
       await blogService.postAll(newObj)
       setBlogs([...blogs,newObj])
-      setTimeout(()=>{setMsg(`A new blog ${title} by ${author} added`)},2000)
+      setMsg(`A new blog ${title} by ${author} added`)
+      setTimeout(()=>{setMsg('')},2000)
       setTitle('')
       setAuthour('')
       setUrl('')
@@ -82,12 +86,16 @@ const App = () => {
     window.localStorage.clear()
   }
 
-  const showBlogs = () => {
+
+
+  
+const showBlogs = () => {
+    
     return(
       <div>
         <ShowMessage message={showMsg}/>
-        <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p> 
-        {addNewBlog()}
+        <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p>
+        {isShowBlog} 
         <h2>blogs</h2>
         {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
       </div>
@@ -112,9 +120,13 @@ const App = () => {
         </div>
         <button type="submit">create</button>
         </form>
+        <button onClick={()=> setShouldShow(true)}>cancel</button>
       </div>
     )
   }
+
+  const isShowBlog = shouldShow ? <button onClick={()=>setShouldShow(false)}> new note </button> : <div>{addNewBlog()}</div>
+
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
