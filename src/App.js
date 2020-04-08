@@ -18,6 +18,8 @@ const App = () => {
   const [errMsg, setErrMsg] = useState('')
   const [showMsg, setMsg] = useState('')
   const [shouldShow, setShouldShow] = useState(true)
+
+
   
 
   useEffect(()=>{
@@ -78,7 +80,7 @@ const showBlogs = () => {
         <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p>
         {isShowBlog} 
         <h2>blogs</h2>
-        {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+        {blogs.map(blog => <Blog key={blog.id} blog={blog}/>)}
       </div>
     )
   }
