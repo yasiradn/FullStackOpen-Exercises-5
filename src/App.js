@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import LoginForm from './components/Login'
+import AddNewBlog from './components/AddBlog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './index.css'
@@ -63,32 +65,11 @@ const App = () => {
     }
   }
 
-  const loginForm = () => {
-      return(
-        <div>
-          <ErrorMessage message={errMsg}/>
-          <h2>log in to application</h2>
-          <form onSubmit={handleLogin}>
-        <div>
-          username <input type="text" value={username} name="Username" onChange={({ target }) => setUsername(target.value)}/>
-        </div>
-        <div>
-          password <input type="password" value={password} name="Password" onChange={({ target }) => setPassword(target.value)}/>
-        </div>
-        <button type="submit">login</button>
-      </form>
-        </div>
-      )
-  }
-
   const handleLogout = () => {
     window.localStorage.removeItem('loggedNoteappUser')
     window.localStorage.clear()
   }
 
-
-
-  
 const showBlogs = () => {
     
     return(
@@ -105,21 +86,15 @@ const showBlogs = () => {
   const addNewBlog = () => {
     return(
       <div>
-        <h2>create new</h2>
-        <form onSubmit={handleBlogCreate}>
-        <div>
-          <div>
-          title <input type="text" value={title} name="Title" onChange={({ target }) => setTitle(target.value)}/>
-          </div>
-          <div>
-          author <input type="text" value={author} name="Title" onChange={({ target }) => setAuthour(target.value)}/>
-          </div>
-          <div>
-          url <input type="text" value={url} name="Title" onChange={({ target }) => setUrl(target.value)}/>
-          </div>
-        </div>
-        <button type="submit">create</button>
-        </form>
+        <AddNewBlog
+        handleBlogCreate={handleBlogCreate}
+        title={title}
+        author={author}
+        url={url}
+        handlesetTitle={({target})=>setTitle(target.value)}
+        handlesetAuthor={({target})=>setAuthour(target.value)}
+        handlesetUrl={({target})=>setUrl(target.value)}
+        />
         <button onClick={()=> setShouldShow(true)}>cancel</button>
       </div>
     )
@@ -141,9 +116,23 @@ const showBlogs = () => {
   return (message === '') ? '': <div className="errorMessage">{message}</div>
   }
 
+  const showLoginForm = () => {
+    return (
+      <div>
+        <ErrorMessage message={errMsg}/> 
+        <LoginForm 
+                  handleUsernameChange={({target})=>setUsername(target.value)}
+                  handlePasswordChange={({target})=>setPassword(target.value)}
+                  handleLogin={handleLogin}
+                  username={username} 
+                  password={password} />
+      </div>
+    )
+  }
+
   return (
     <div>
-     {user === null ? loginForm() : showBlogs()}
+     {user === null ? showLoginForm() : showBlogs()}
     </div>
   )
 }
