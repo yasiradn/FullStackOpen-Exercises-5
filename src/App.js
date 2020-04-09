@@ -41,6 +41,7 @@ const App = () => {
       blogService.setToken(user.token)
       window.localStorage.setItem('BlogAppUser', JSON.stringify(user))
       setUser(user)
+      console.log(blogs)
       setUsername('')
       setPassword('')
     } catch (err) {
@@ -72,8 +73,9 @@ const App = () => {
     window.localStorage.clear()
   }
 
-const showBlogs = () => {
-    
+
+const showBlogs = () => { 
+
     return(
       <div>
         <ShowMessage message={showMsg}/>
@@ -104,11 +106,15 @@ const showBlogs = () => {
 
   const isShowBlog = shouldShow ? <button onClick={()=>setShouldShow(false)}> new note </button> : <div>{addNewBlog()}</div>
 
-
+  async function getAllBlogs(){
+    const result = await blogService.getAll()
+    result.sort((a, b) => b.likes - a.likes);
+    setBlogs(result)
+  }
+  
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    console.log('useffect')
+    getAllBlogs()
   }, [blogs])
 
   const ShowMessage = ({message}) => {

@@ -10,13 +10,12 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
   const [viewBlog, setViewBlog] = useState(false)
-  const [countLike, setCountLike] = useState(0)
-  const handleUpdate = async() => {
-    //no auth in backend as now
-    console.log(`update like`)
-    setCountLike(countLike+1)
+
+  async function handleBtn(){
+   let likes = blog.likes + 1
+   console.log(likes)
     const updateObj = {
-      likes: countLike,
+      likes: likes,
       title: blog.title,
       author: blog.author,
       url: blog.url,
@@ -24,6 +23,7 @@ const Blog = ({ blog }) => {
     }
     await blogService.updateAll(updateObj)
   }
+
   const blogDetailView = () => {
     return(
       <div>
@@ -31,7 +31,7 @@ const Blog = ({ blog }) => {
         <br/> 
         {blog.url}
         <br/>
-        likes {blog.likes} <button onClick={handleUpdate}>likes</button>
+        likes {blog.likes} <button onClick={handleBtn}>likes</button>
         <br/>
         {blog.author}
       </div>
