@@ -59,7 +59,7 @@ const Blog = ({ blog }) => {
     )
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className={'blog'}>
       {viewBlog ? blogDetailView(): blogNormalView()}
     </div>
   )
