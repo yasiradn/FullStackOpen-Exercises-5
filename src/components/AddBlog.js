@@ -1,9 +1,9 @@
 import React from 'react'
 const AddNewBlog = ({handleBlogCreate,title,author,url,handlesetTitle,handlesetAuthor,handlesetUrl}) => {
-    return(
-      <div>
-        <h2>create new</h2>
-        <form onSubmit={handleBlogCreate}>
+  return(
+    <div>
+      <h2>create new</h2>
+      <form onSubmit={handleBlogCreate}>
         <div>
           <div>
           title <input type="text" value={title} name="Title" onChange={handlesetTitle}/>
@@ -16,9 +16,9 @@ const AddNewBlog = ({handleBlogCreate,title,author,url,handlesetTitle,handlesetA
           </div>
         </div>
         <button type="submit">create</button>
-        </form>
-      </div>
-    )
-  }
+      </form>
+    </div>
+  )
+}
 
-  export default AddNewBlog
+export default AddNewBlog

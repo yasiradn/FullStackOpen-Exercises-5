@@ -19,10 +19,7 @@ const App = () => {
   const [showMsg, setMsg] = useState('')
   const [shouldShow, setShouldShow] = useState(true)
 
-
-  
-
-  useEffect(()=>{
+  useEffect(() => {
     const getLoggedUser = window.localStorage.getItem('BlogAppUser')
     if(getLoggedUser){
       const user = JSON.parse(getLoggedUser)
@@ -45,8 +42,8 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
-      setErrMsg(`Wrong username or password`)
-      setTimeout(()=>{setErrMsg(``)},2000)
+      setErrMsg('Wrong username or password')
+      setTimeout(() => {setErrMsg('')},2000)
       console.log(err)
     }
   }
@@ -55,11 +52,11 @@ const App = () => {
     e.preventDefault()
     console.log(`Passing Data ${title} ${author} ${url}`)
     try {
-      const newObj = {title,author,url}
+      const newObj = { title,author,url }
       await blogService.postAll(newObj)
       setBlogs([...blogs,newObj])
       setMsg(`A new blog ${title} by ${author} added`)
-      setTimeout(()=>{setMsg('')},2000)
+      setTimeout(() => {setMsg('')},2000)
       setTitle('')
       setAuthour('')
       setUrl('')
@@ -74,13 +71,13 @@ const App = () => {
   }
 
 
-const showBlogs = () => { 
+  const showBlogs = () => {
 
     return(
       <div>
         <ShowMessage message={showMsg}/>
         <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p>
-        {isShowBlog} 
+        {isShowBlog}
         <h2>blogs</h2>
         {blogs.map(blog => <Blog key={blog.id} blog={blog}/>)}
       </div>
@@ -91,56 +88,56 @@ const showBlogs = () => {
     return(
       <div>
         <AddNewBlog
-        handleBlogCreate={handleBlogCreate}
-        title={title}
-        author={author}
-        url={url}
-        handlesetTitle={({target})=>setTitle(target.value)}
-        handlesetAuthor={({target})=>setAuthour(target.value)}
-        handlesetUrl={({target})=>setUrl(target.value)}
+          handleBlogCreate={handleBlogCreate}
+          title={title}
+          author={author}
+          url={url}
+          handlesetTitle={({ target }) => setTitle(target.value)}
+          handlesetAuthor={({ target }) => setAuthour(target.value)}
+          handlesetUrl={({ target }) => setUrl(target.value)}
         />
-        <button onClick={()=> setShouldShow(true)}>cancel</button>
+        <button onClick={() => setShouldShow(true)}>cancel</button>
       </div>
     )
   }
 
-  const isShowBlog = shouldShow ? <button onClick={()=>setShouldShow(false)}> new note </button> : <div>{addNewBlog()}</div>
+  const isShowBlog = shouldShow ? <button onClick={() => setShouldShow(false)}> new note </button> : <div>{addNewBlog()}</div>
 
   async function getAllBlogs(){
     const result = await blogService.getAll()
-    result.sort((a, b) => b.likes - a.likes);
+    result.sort((a, b) => b.likes - a.likes)
     setBlogs(result)
   }
-  
+
   useEffect(() => {
     console.log('useffect')
     getAllBlogs()
   }, [blogs])
 
-  const ShowMessage = ({message}) => {
+  const ShowMessage = ({ message }) => {
     return (message === '') ? '': <div className="showMessage">{message}</div>
   }
-  const ErrorMessage = ({message}) => {
-  return (message === '') ? '': <div className="errorMessage">{message}</div>
+  const ErrorMessage = ({ message }) => {
+    return (message === '') ? '': <div className="errorMessage">{message}</div>
   }
 
   const showLoginForm = () => {
     return (
       <div>
-        <ErrorMessage message={errMsg}/> 
-        <LoginForm 
-                  handleUsernameChange={({target})=>setUsername(target.value)}
-                  handlePasswordChange={({target})=>setPassword(target.value)}
-                  handleLogin={handleLogin}
-                  username={username} 
-                  password={password} />
+        <ErrorMessage message={errMsg}/>
+        <LoginForm
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleLogin={handleLogin}
+          username={username}
+          password={password} />
       </div>
     )
   }
 
   return (
     <div>
-     {user === null ? showLoginForm() : showBlogs()}
+      {user === null ? showLoginForm() : showBlogs()}
     </div>
   )
 }

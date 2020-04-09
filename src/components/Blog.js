@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog }) => {
@@ -12,8 +12,8 @@ const Blog = ({ blog }) => {
   const [viewBlog, setViewBlog] = useState(false)
 
   async function handleBtn(){
-   let likes = blog.likes + 1
-   console.log(likes)
+    let likes = blog.likes + 1
+    console.log(likes)
     const updateObj = {
       likes: likes,
       title: blog.title,
@@ -38,8 +38,8 @@ const Blog = ({ blog }) => {
   const blogDetailView = () => {
     return(
       <div>
-        {blog.title} <button onClick={()=>setViewBlog(false)}>hide</button>
-        <br/> 
+        {blog.title} <button onClick={() => setViewBlog(false)}>hide</button>
+        <br/>
         {blog.url}
         <br/>
         likes {blog.likes} <button onClick={handleBtn}>likes</button>
@@ -54,17 +54,14 @@ const Blog = ({ blog }) => {
   const blogNormalView = () => {
     return(
       <div>
-        {blog.title} {blog.author} <button onClick={()=>setViewBlog(true)}> view </button>
+        {blog.title} {blog.author} <button onClick={() => setViewBlog(true)}> view </button>
       </div>
     )
   }
-
-
-
   return (
     <div style={blogStyle}>
-       {viewBlog ? blogDetailView(): blogNormalView()}
-  </div>
+      {viewBlog ? blogDetailView(): blogNormalView()}
+    </div>
   )
 
 }
