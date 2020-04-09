@@ -24,6 +24,17 @@ const Blog = ({ blog }) => {
     await blogService.updateAll(updateObj)
   }
 
+  async function removeBlog(){
+    try{
+      const isDel = window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
+      if(isDel){
+        await blogService.deleteBlog(blog.id)
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   const blogDetailView = () => {
     return(
       <div>
@@ -34,6 +45,8 @@ const Blog = ({ blog }) => {
         likes {blog.likes} <button onClick={handleBtn}>likes</button>
         <br/>
         {blog.author}
+        <br/>
+        <button onClick={removeBlog}>remove</button>
       </div>
     )
   }
@@ -45,6 +58,8 @@ const Blog = ({ blog }) => {
       </div>
     )
   }
+
+
 
   return (
     <div style={blogStyle}>
