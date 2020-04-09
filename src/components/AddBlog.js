@@ -1,5 +1,5 @@
 import React from 'react'
-const AddNewBlog = ({handleBlogCreate,title,author,url,handlesetTitle,handlesetAuthor,handlesetUrl}) => {
+const AddNewBlog = ({ handleBlogCreate,title,author,url,handlesetTitle,handlesetAuthor,handlesetUrl }) => {
   return(
     <div>
       <h2>create new</h2>
