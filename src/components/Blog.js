@@ -29,7 +29,7 @@ const Blog = ({ blog, onClickUpdate }) => {
         <br/>
         {blog.url}
         <br/>
-        likes {blog.likes} <button onClick={onClickUpdate}>likes</button>
+        likes {blog.likes} <button id="like-btn" onClick={onClickUpdate}>likes</button>
         <br/>
         {blog.author}
         <br/>
@@ -41,7 +41,7 @@ const Blog = ({ blog, onClickUpdate }) => {
   const blogNormalView = () => {
     return(
       <div>
-        {blog.title} {blog.author} <button onClick={() => setViewBlog(true)}> view </button>
+        {blog.title} {blog.author} <button id="view-btn" onClick={() => setViewBlog(true)}> view </button>
       </div>
     )
   }

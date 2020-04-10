@@ -15,7 +15,7 @@ const AddNewBlog = ({ handleBlogCreate,title,author,url,handlesetTitle,handleset
           url <input id="url" type="text" value={url} name="URL" onChange={handlesetUrl}/>
           </div>
         </div>
-        <button type="submit">create</button>
+        <button id="submit-btn" type="submit">create</button>
       </form>
     </div>
   )

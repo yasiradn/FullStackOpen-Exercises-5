@@ -89,7 +89,7 @@ const App = () => {
     return(
       <div>
         <ShowMessage message={showMsg}/>
-        <p>{user.name} logged in <button onClick={handleLogout}> logout </button></p>
+        <p>{user.name} logged in <button id="logout" onClick={handleLogout}> logout </button></p>
         {isShowBlog}
         <h2>blogs</h2>
         {blogs.map(blog => <Blog key={blog.id} blog={blog} onClickUpdate={() => handleBtn(blog)}/>)}
@@ -114,7 +114,7 @@ const App = () => {
     )
   }
 
-  const isShowBlog = shouldShow ? <button onClick={() => setShouldShow(false)}> new note </button> : <div>{addNewBlog()}</div>
+  const isShowBlog = shouldShow ? <button id="createBlog-btn" onClick={() => setShouldShow(false)}> new blog </button> : <div>{addNewBlog()}</div>
 
   async function getAllBlogs(){
     const result = await blogService.getAll()
