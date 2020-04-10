@@ -15,6 +15,7 @@ const Blog = ({ blog, onClickUpdate }) => {
     try{
       const isDel = window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
       if(isDel){
+        console.log('Deleting')
         await blogService.deleteBlog(blog.id)
       }
     }catch(err){
@@ -24,23 +25,19 @@ const Blog = ({ blog, onClickUpdate }) => {
 
   const blogDetailView = () => {
     return(
-      <div>
-        {blog.title} <button onClick={() => setViewBlog(false)}>hide</button>
-        <br/>
-        {blog.url}
-        <br/>
-        likes {blog.likes} <button id="like-btn" onClick={onClickUpdate}>likes</button>
-        <br/>
-        {blog.author}
-        <br/>
-        <button onClick={removeBlog}>remove</button>
+      <div id= "detailedView">
+        <p id="title">{blog.title} <button id="hide-Btn" onClick={() => setViewBlog(false)}>hide</button></p>
+        <p id="url">{blog.url}</p>
+        <p id="like">likes {blog.likes} <button id="like-btn" onClick={onClickUpdate}>likes</button></p>
+        <p id="author">{blog.author}</p>
+        <button id="delete-btn" onClick={removeBlog}>remove</button>
       </div>
     )
   }
 
   const blogNormalView = () => {
     return(
-      <div>
+      <div id="normalView">
         {blog.title} {blog.author} <button id="view-btn" onClick={() => setViewBlog(true)}> view </button>
       </div>
     )
