@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, onClickUpdate }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -10,19 +10,6 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
   const [viewBlog, setViewBlog] = useState(false)
-
-  async function handleBtn(){
-    let likes = blog.likes + 1
-    console.log(likes)
-    const updateObj = {
-      likes: likes,
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      id:blog.id
-    }
-    await blogService.updateAll(updateObj)
-  }
 
   async function removeBlog(){
     try{
@@ -42,7 +29,7 @@ const Blog = ({ blog }) => {
         <br/>
         {blog.url}
         <br/>
-        likes {blog.likes} <button onClick={handleBtn}>likes</button>
+        likes {blog.likes} <button onClick={onClickUpdate}>likes</button>
         <br/>
         {blog.author}
         <br/>
