@@ -6,13 +6,13 @@ const AddNewBlog = ({ handleBlogCreate,title,author,url,handlesetTitle,handleset
       <form onSubmit={handleBlogCreate}>
         <div>
           <div>
-          title <input type="text" value={title} name="Title" onChange={handlesetTitle}/>
+          title <input id="title" type="text" value={title} name="Title" onChange={handlesetTitle}/>
           </div>
           <div>
-          author <input type="text" value={author} name="Author" onChange={handlesetAuthor}/>
+          author <input id="author" type="text" value={author} name="Author" onChange={handlesetAuthor}/>
           </div>
           <div>
-          url <input type="text" value={url} name="URL" onChange={handlesetUrl}/>
+          url <input id="url" type="text" value={url} name="URL" onChange={handlesetUrl}/>
           </div>
         </div>
         <button type="submit">create</button>
